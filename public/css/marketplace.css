@@ -1,0 +1,22 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+:root {
+    --primary-color: #4caf50; /* Bright green */
+    --accent-color: #2196f3; /* Accent color */
+    --text-color: #333; /* Text color */
+}
+
+h1, h3 {
+    color: var(--primary-color);
+}
+
+p {
+    color: var(--text-color);
+}
+
+background { no-repeat url("../img/image.png");}
