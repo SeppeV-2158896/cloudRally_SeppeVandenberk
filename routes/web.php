@@ -23,4 +23,5 @@ Route::get('/marketplace', function() {
 })->name('index');
 Route::get('/marketplace/newCar', function () {return view('newcar');});
 Route::post('/marketplace/newCar', [CarController::class, 'create'])->name('car.create');
+Route::get('/trackcondition', function () {return view('map');});
 
