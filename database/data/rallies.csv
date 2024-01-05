@@ -1,0 +1,14 @@
+name;location;start_date;end_date;winner;second_place;interval_second;third_place;interval_third;season_id
+Rallye Monte-Carlo;Monaco, France;2023-01-19;2023-01-22;33;30;+32.6;31;+1:13.5;1
+Central Europe Rally;Hungary, Romania;2023-02-23;2023-02-26;32;33;+14.8;29;+1:04.5;1
+Rally Sweden;Sweden, Norway;2023-03-09;2023-03-12;29;42;+8.9;31;+18.8;1
+Rally Chile;Chile;2023-04-06;2023-04-09;31;32;+23.1;33;+30.2;1
+Rally Argentina;Argentina;2023-04-27;2023-04-30;32;31;+15.7;30;+48.2;1
+Rally Portugal;Portugal;2023-05-18;2023-05-21;33;30;+28.5;36;+1:07.6;1
+Rally Italy Sardegna;Italy;2023-06-08;2023-06-11;36;31;+5.1;33;+6.1;1
+Safari Rally Kenya;Kenya;2023-06-29;2023-07-02;31;35;+18.8;32;+55.8;1
+Rally Estonia;Estonia;2023-07-13;2023-07-16;32;29;+22.2;42;+1:09.7;1
+Rally Finland;Finland;2023-08-10;2023-08-13;29;30;+19.4;31;+1:12.5;1
+Rally Japan;Japan;2023-09-07;2023-09-10;33;30;+21.8;32;+23.1;1
+Rally Spain;Spain;2023-10-12;2023-10-15;31;33;+17.6;30;+19.2;1
+Rally Australia;Australia;2023-11-09;2023-11-12;32;33;+12.9;30;+40.2;1

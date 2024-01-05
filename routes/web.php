@@ -16,7 +16,7 @@ use App\Models\Car;
 |
 */
 
-Route::get('/', function () {return view('welcome');});
+
 Route::get('/marketplace', function() {
     $cars = Car::all();
     return view('cars',['cars' => $cars]);
@@ -26,4 +26,5 @@ Route::post('/marketplace/newCar', [CarController::class, 'create'])->name('car.
 Route::get('/trackcondition', function () {return view('map');});
 
 Route::get('/test', function () {return view('test');});
+Route::get('/', function () {return view('welcome');});
 

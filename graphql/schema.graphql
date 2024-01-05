@@ -1,0 +1,48 @@
+type Query {
+  participant(id: Int! @eq): Participant @find
+  participants: [Participant!]! @all
+  rally(id: ID!): Rally @find
+  rallies: [Rally!]! @all
+  season(id: ID!): Season @find
+  seasons: [Season!]! @all
+}
+
+
+type Participant {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  birthday: String!
+}
+
+type Rally {
+  id: ID!
+  name: String!
+  location: String!
+  start_date: DateTime!
+  end_date: DateTime!
+  winner: Team! @belongsTo
+  second_place: Team! @belongsTo
+  third_place: Team! @belongsTo
+  interval_second: String!
+  interval_third: String!
+  season: Season! @belongsTo
+}
+
+type Season {
+  id: ID!
+  year: Int!
+  champion: Team!
+  constructor_champion: String!
+  rallies: [Rally!]! @hasMany
+}
+
+type Team {
+  id: ID!
+  name: String!
+  pilot: Participant! @belongsTo
+  co_pilot: Participant! @belongsTo
+  car: String!
+  constructor: String!
+  champion: Season!
+}

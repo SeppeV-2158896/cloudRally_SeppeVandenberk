@@ -16,7 +16,7 @@ class carsSeeder extends Seeder
         $faker = (new \Faker\Factory())::create();
         $faker->addProvider(new \Faker\Provider\Fakecar($faker));
 
-        foreach (range(1, 14) as $index) {
+        foreach (range(1, 20) as $index) {
             
 
         $json = file_get_contents('https://api.unsplash.com/photos/random?client_id=tE7UOZI-TDa9p_z6KPlwNVO9y58FkbkO3NJ3ivX10qE&query=rallycar');
