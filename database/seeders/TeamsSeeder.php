@@ -27,7 +27,7 @@ class TeamsSeeder extends Seeder
 
                     'name'=> $data[2],
                     'pilot'=> $data[0],
-                    'co-pilot'=> $data[1],
+                    'copilot'=> $data[1],
                     'car'=> $data[3],
                     'constructor'=> $data[4],
 

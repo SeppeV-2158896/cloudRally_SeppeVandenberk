@@ -28,7 +28,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('pilot');
-            $table->integer('co-pilot');
+            $table->integer('copilot');
             $table->string('car');
             $table->string('constructor');
             $table->timestamps();

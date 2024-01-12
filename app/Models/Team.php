@@ -14,8 +14,20 @@ class Team extends Model
     protected $fillable = [
         'name',
         'pilot',
-        'co-pilot',
+        'copilot',
         'car',
         'constructor',
     ];
+
+    public function pilot(): BelongsTo
+    {
+        return $this->belongsTo(Participant::class, 'pilot');
+    }
+
+    public function copilot(): BelongsTo
+    {
+        return $this->belongsTo(Participant::class, 'copilot');
+    }
+    
+
 }
