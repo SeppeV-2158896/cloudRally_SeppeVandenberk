@@ -1,7 +1,4 @@
 <style>
-    body {
-    background-color: #f8f9fa;
-}
 
 .container {
     margin-top: 50px;
@@ -23,12 +20,6 @@ legend {
 
 .form-group {
     margin-bottom: 20px;
-}
-
-label {
-    font-size: 16px;
-    color: #007bff; /* Same color as h1 in the existing color scheme */
-    font-weight: bold;
 }
 
 .form-control {
@@ -64,7 +55,7 @@ button:hover {
     background-color: #5c69df;
 }
 </style>
-
+<link rel="stylesheet" href={{ asset('css/generic.css')}}>
 <div class="container">
 
     <form class="well form-horizontal" method="post" id="car_form" action="{{route('car.create')}}">

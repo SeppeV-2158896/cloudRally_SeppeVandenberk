@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Log;
 class SoapController extends Controller
 {
     public function callSoapService(){
-        return view('calendar');
+        return view('SOAP/calendar');
     }
 
     public function getRallyByName($name){
+        $decodedName = urldecode($name);
+
         $options = [
             'cache_wsdl' => WSDL_CACHE_NONE,
             'trace' => 1,
@@ -24,11 +26,12 @@ class SoapController extends Controller
                 ],
             ]),
         ];
-        $endpoint = "http://http://localhost:8080/ws/rally.wsdl";
-        $response = Soap::to($endpoint, $options)->getRallyByName(['name' => $name]);
+        $endpoint = "http://localhost:8080/ws/rally.wsdl";
+        $request = ['name' => $decodedName];
+        $response = Soap::to($endpoint)->call('getRallyByName', $request);
         $responseString = json_encode($response);
-        print($name);
-        print($responseString); 
+        
+        return $responseString;
     }
 
     public function getAllRallies(){
@@ -44,7 +47,7 @@ class SoapController extends Controller
             ]),
         ];
         $endpoint = "http://localhost:8080/ws/rally.wsdl";
-        $response = Soap::to($endpoint, $options)->getRallies();
+        $response = Soap::to($endpoint)->getRallies();
  
         $responseString = json_encode($response);
 
@@ -65,7 +68,7 @@ class SoapController extends Controller
         ];
         $endpoint = "http://localhost:8080/ws/rally.wsdl";
         $request = ['longitude'=> $longitude, 'latitude' => $latitude];
-        $response = Soap::to($endpoint)->call('getFutureRallies');
+        $response = Soap::to($endpoint)->call('getRalliesByLocation', $request);
         $responseString = json_encode($response);
              
 

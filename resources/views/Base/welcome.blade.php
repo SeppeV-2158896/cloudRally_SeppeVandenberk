@@ -4,21 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rally Racing Services</title>
+    <link rel="stylesheet" href={{ asset('css/generic.css')}}>
     <style>
-      body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-        }
-
-        header {
-            background-color: #007bff;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-        }
-
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -35,15 +22,6 @@
             width: 300px;
             text-align: center;
         }
-
-        a {
-            text-decoration: none;
-            color: #007bff;
-        }
-
-        a:hover {
-            color: #0056b3;
-        }
     </style>
   </head>
   <body>
@@ -57,9 +35,9 @@
         <a href='{{ route('callSoapService') }}'>Learn More</a>
       </div>
       <div class="tile">
-        <h2>Car Telemetry (gRPC)</h2>
+        <h2>Car Telemetry (MQTT)</h2>
         <p>Enables real-time telemetry data from rally cars during races.</p>
-        <a href='{{ route('index') }}'>Learn More</a>
+        <a href='{{ route('telemetry') }}'>Learn More</a>
       </div>
       <div class="tile">
         <h2>WRC Results (GraphQL)</h2>
@@ -75,11 +53,6 @@
         <h2>Cloud Rally Communication (WebSockets)</h2>
         <p>Enables communication between pilots, copilots, and engineers during races.</p>
         <a href='{{ route('chat') }}'>Learn More</a>
-      </div>
-      <div class="tile">
-        <h2>Track Conditions (MQTT)</h2>
-        <p>Sends updates on track conditions at specific checkpoints during races.</p>
-        <a href='{{ route('index') }}'>Learn More</a>
       </div>
     </div>
   </body>

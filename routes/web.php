@@ -22,13 +22,13 @@ use App\Models\Car;
 Route::get('/marketplace', [CarController::class, 'index'])->name('marketplace');
 Route::get('/marketplace/forsale', [CarController::class, 'getForSale']);
 Route::get('/marketplace/filtered', [CarController::class, 'getFiltered'])->name('filtered');
-Route::get('/marketplace/newCar', function () {return view('newcar');})->name('newCar');
+Route::get('/marketplace/newCar', function () {return view('REST/newcar');})->name('newCar');
 Route::post('/marketplace/newCar', [CarController::class, 'create'])->name('car.create');
 
 Route::get('/callSoapService', [SoapController::class, 'callSoapService'])->name('callSoapService');
 Route::get('/calendar/getAllRallies', [SoapController::class, 'getAllRallies'])->name('getRallies');
 Route::get('/calendar/getAllFutureRallies', [SoapController::class, 'getAllFutureRallies'])->name('getFutureRallies');
-Route::get('/calendar/getRallyByName', [SoapController::class, 'getRallyByName'])->name('getallyByName');
+Route::get('/calendar/getRallyByName/{name}', [SoapController::class, 'getRallyByName'])->name('getallyByName');
 Route::get('/calendar/getRalliesByLocation/{longitude}/{latitude}', [SoapController::class, 'getRalliesByLocation'])->name('getRalliesByLocation');
 
 Route::get('/wrc', function () {return view('graphql/graphql');})->name('graphqlSearch');
@@ -40,9 +40,10 @@ Route::get('/wrc/graphql/getParticipantsByNames', function () {return view('grap
 Route::get('/wrc/graphql/getTeamByName', function () {return view('graphql/teams');});
 Route::get('/wrc/graphql/getSeasonByYear', function () {return view('graphql/season');});
 
-Route::get('cloudrallycommunication', function () {return view('websockets/chat');})->name('chat');
+Route::get('/cloudrallycommunication', function () {return view('websockets/chat');})->name('chat');
 
-Route::get('/trackcondition', function () {return view('map');});
-Route::get('/test', function () {return view('season');});
-Route::get('/', function () {return view('welcome');})->name('index');
+Route::get('/telemetry',function () {return view('MQTT/telemetry');})->name("telemetry");
+
+Route::get('/test', function () {return view('Base/test');});
+Route::get('/', function () {return view('Base/welcome');})->name('index');
 

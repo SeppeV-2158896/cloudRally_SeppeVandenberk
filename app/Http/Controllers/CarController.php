@@ -13,7 +13,7 @@ class CarController extends Controller
     public function index()
     {
         $cars = Car::all();
-        return view('cars', ['cars' => $cars]);
+        return view('REST/cars', ['cars' => $cars]);
     }
     public function create(Request $request){
         $this->validate($request, [
@@ -39,7 +39,7 @@ class CarController extends Controller
 
     public function getForSale(Request $request){
         $cars = Car::all()->where('sold', false);
-        return view('cars', ['cars' => $cars]);
+        return view('REST/cars', ['cars' => $cars]);
     }
     
 
@@ -66,7 +66,7 @@ class CarController extends Controller
 
         $cars = $cars->where('sold', false);
 
-        return view('cars', ['cars' => $cars]);
+        return view('REST/cars', ['cars' => $cars]);
     }
 
     

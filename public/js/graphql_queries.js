@@ -2,7 +2,7 @@
 function getAllTeams(){
     return `{
         teams {
-          name
+          distinct(field: name)
         }
       }`
 }

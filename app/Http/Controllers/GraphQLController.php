@@ -18,30 +18,24 @@ class GraphQLController extends Controller
 
     $ch = curl_init($url);
 
-    // Set cURL options
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'Content-Type: application/json',
         'X-CSRF-TOKEN: ' . $csrfToken,
-        // Add any other headers if needed
     ]);
 
     $response = curl_exec($ch);
 
     if (curl_errno($ch)) {
-        // Handle error
         die('Curl error: ' . curl_error($ch));
     }
 
-    // Close cURL resource
     curl_close($ch);
 
-    // Process $response as needed (e.g., JSON decoding)
     $result = json_decode($response, true);
 
-    // Use $result for further processing
     print_r($result);
     }
 

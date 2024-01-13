@@ -11,12 +11,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://unpkg.com/leaflet-omnivore/leaflet-omnivore.min.js"></script>
+    <link rel="stylesheet" href={{ asset('css/generic.css')}}>
     <style>
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-        }
 
         #map-container {
             position: relative;
@@ -68,93 +65,128 @@
         <div id="map"></div>
         <div id="sidebar">
             <h1>Calendar</h1>
+            <button onclick="showFutureRallies()">Show Future Rallies</button>
             <div id="details-container">
             </div>
         </div>
     </div>
 
     <script>
+        var map; // Declare map variable outside functions to make it accessible
+    
         fetch('/calendar/getAllRallies')
             .then(response => response.json())
             .then(data => {
-                console.log('Data:', data); // Log the entire data object to the console
+                console.log('Data:', data);
                 createMap(data.response);
                 createRallyDetails(data.response);
             })
             .catch(error => console.error('Error fetching data:', error));
-
+    
         function createMap(data) {
-            var map = L.map('map').setView([0, 0], 2); 
-
-            // Add OpenStreetMap as the base layer
+            map = L.map('map').setView([0, 0], 2);
+    
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
-
+    
             var rallyMarkers = new Map();
-
-            var rallyArray = Array.isArray(data.rally) ? data.rally : [data.rally]; // Ensure we have an array
+    
+            var rallyArray = Array.isArray(data.rally) ? data.rally : [data.rally];
             rallyArray.forEach(rally => {
-                console.log('Rally:', rally);
-            
                 var locationKey = rally.service.latitude + ',' + rally.service.longitude;
-
+    
                 if (!rallyMarkers.has(locationKey)) {
                     rallyMarkers.set(locationKey, L.marker([rally.service.latitude, rally.service.longitude])
                         .addTo(map)
                         .bindPopup(rally.name));
+    
+                    rallyMarkers.get(locationKey).on('click', function () {
+                        showLocalRally(rally);
+                    });
                 } else {
                     var marker = rallyMarkers.get(locationKey);
                     var popupContent = marker.getPopup().getContent();
                     popupContent += '<br>' + rally.name;
                     marker.setPopupContent(popupContent);
                 }
-
-                rallyMarkers.get(locationKey).on('click', function () {
-                    showLocalRally(rally);
-                });
             });
         }
-
-        function showLocalRally(rally){
-            fetch('/calendar/getAllFutureRallies')
-            .then(response => response.json())
-            .then(data => {
-                console.log('Data:', data); // Log the entire data object to the console
-                createRallyDetails(data.response);
-            })
-            .catch(error => console.error('Error fetching data:', error));
+    
+        function showLocalRally(rally) {
+            var detailsContainer = document.getElementById('details-container');
+            detailsContainer.innerHTML = "";
+    
+            var url = `/calendar/getRalliesByLocation/${rally.service.longitude}/${rally.service.latitude}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Data:', data);
+                    createRallyDetails(data.response);
+                })
+                .catch(error => console.error('Error fetching data:', error));
         }
-
-        // Function to create rally details in the sidebar
+    
+        function showFutureRallies() {
+            var detailsContainer = document.getElementById('details-container');
+            detailsContainer.innerHTML = "";
+    
+            fetch('/calendar/getAllFutureRallies')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Data:', data);
+                    createRallyDetails(data.response);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+    
         function createRallyDetails(data) {
             var detailsContainer = document.getElementById('details-container');
-
-            detailsContainer.children().remove();
-
-            var rallyArray = Array.isArray(data.rally) ? data.rally : [data.rally]; // Ensure we have an array
+    
+            var rallyArray = Array.isArray(data.rally) ? data.rally : [data.rally];
             rallyArray.forEach(rally => {
-                console.log('Rally:', rally);
                 var details = document.createElement('div');
                 details.className = 'rally-details';
                 details.textContent = rally.name;
-
-                // Add click event to display rally details
+    
                 details.addEventListener('click', function () {
                     showRallyDetails(rally);
                 });
-
+    
                 detailsContainer.appendChild(details);
             });
         }
-
-        // Function to show rally details in the sidebar
+    
         function showRallyDetails(rally) {
-            var detailsContainer = document.getElementById('details-container');
-            detailsContainer.innerHTML = '<h2>' + rally.name + '</h2>' +
-                '<p>Latitude: ' + rally.service.latitude + '</p>' +
-                '<p>Longitude: ' + rally.service.longitude + '</p>';
+            var url = `/calendar/getRallyByName/${encodeURIComponent(rally.name)}`;
+    
+            return fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Data:', data);
+    
+                    var detailsContainer = document.getElementById('details-container');
+                    detailsContainer.innerHTML = '<h2>' + data.response.rally.name + '</h2>' +
+                        '<p>Country: ' + data.response.rally.country + '</p>' +
+                        '<p>Date: ' + data.response.rally.date.year + '-' + data.response.rally.date.month + '-' + data.response.rally.date.day + '</p>' +
+                        '<p>Latitude: ' + data.response.rally.service.latitude + '</p>' +
+                        '<p>Longitude: ' + data.response.rally.service.longitude + '</p>' +
+                        '<p>Website: <a href="' + data.response.rally.website + '" target="_blank">' + data.response.rally.website + '</a></p>' +
+                        '<p>Results: <a href="' + data.response.rally.results + '" target="_blank">' + data.response.rally.results + '</a></p>' +
+                        '<p>Amount of Stages: ' + data.response.rally.amount_of_stages + '</p>' +
+                        '<p>Stages: <br>' + data.response.rally.stages.join('<br> ') + '</p>';
+    
+                    // Add KML layer
+                    if (data.response.rally.maps) {
+                        omnivore.kml('parcours/' + data.response.rally.maps + '.kml').addTo(map);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    return 'Error fetching data';
+                });
         }
     </script>
+    
 </body>
 </html>

@@ -4,10 +4,8 @@
 <head>
     <title>Incognito Chat Application</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href={{ asset('css/generic.css')}}>
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
 
         .container {
             max-width: 800px;

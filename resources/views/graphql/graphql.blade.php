@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GraphQL Playground</title>
     <script src="{{ asset('js/graphql_queries.js') }}"></script>
+    <link rel="stylesheet" href={{ asset('css/generic.css')}}>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -38,8 +37,6 @@
         }
 
         button {
-            background-color: #4caf50;
-            color: white;
             border: none;
             padding: 10px 20px;
             text-align: center;
@@ -50,13 +47,6 @@
             transition-duration: 0.4s;
             cursor: pointer;
             border-radius: 5px;
-            border: 1px solid #4caf50;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        button:hover {
-            background-color: white;
-            color: black;
         }
     </style>
 </head>
@@ -159,12 +149,10 @@
                 case 'getSeasonByYear':
                     formValues = document.getElementById('year').value;
                     break;
-                // Add more cases for other queries if needed
             }
 
             console.log(window[selectedQuery](formValues));
 
-            // Use the selected query and form values from the GraphQL queries file
             const response = await fetch('/graphql', {
                 method: 'POST',
                 headers: {
